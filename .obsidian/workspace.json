@@ -1,0 +1,209 @@
+{
+  "main": {
+    "id": "854ca052e6bfbadb",
+    "type": "split",
+    "children": [
+      {
+        "id": "b25d57ced0985e27",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8c048653a3192eae",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "基本技能学习/obsidian学习.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "obsidian学习"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "fa7a28e380b71ddd",
+    "type": "split",
+    "children": [
+      {
+        "id": "26fd18cf9a2370eb",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6017d5938f1bac6d",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "3a7ac0d6bd49baa2",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "169598de19aa9655",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "438449440aacdc6f",
+    "type": "split",
+    "children": [
+      {
+        "id": "cae7dccac4709040",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6127b1ab46aab685",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "基本技能学习/obsidian学习.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "obsidian学习 的反向链接列表"
+            }
+          },
+          {
+            "id": "ae6dfa3787689f72",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "基本技能学习/obsidian学习.md",
+                "linksCollapsed": true,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "obsidian学习 的出链列表"
+            }
+          },
+          {
+            "id": "61f093e1d3744c85",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "11e3f047dd3744e7",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "d8911f7ea17bd3e6",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "基本技能学习/obsidian学习.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "obsidian学习 的大纲"
+            }
+          }
+        ],
+        "currentTab": 4
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "obsidian-git:Open Git source control": false,
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false,
+      "zk-prefixer:创建时间戳笔记": false
+    }
+  },
+  "active": "8c048653a3192eae",
+  "lastOpenFiles": [
+    "templates/模板1.md",
+    "未命名2/未命名.md",
+    "基本技能学习/obsidian学习.md",
+    "基本技能学习/未命名.md",
+    "基本技能学习/111 1.webp",
+    "未命名.canvas",
+    "未命名.md",
+    "www.baidu.com.md",
+    "基本技能学习/111.webp",
+    "[哔哩哔哩.md",
+    "templates",
+    "未命名.base",
+    "未命名2",
+    "未命名/122.md",
+    "基本技能学习",
+    "111/欢迎.md",
+    "111"
+  ]
+}
