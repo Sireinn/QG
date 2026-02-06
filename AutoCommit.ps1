@@ -1,5 +1,5 @@
-# 切换到项目目录
-Set-Location "D:\obsidian\知识库\QG寒假训练营"
+# 切换到项目目录（修改为新的文件夹名）
+Set-Location "D:\obsidian\知识库\QG"
 
 # 添加所有更改到暂存区
 git add .
@@ -8,8 +8,8 @@ git add .
 $commitMessage = "自动提交: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
 git commit -m $commitMessage
 
-# 推送到远程仓库
-git push
+# 推送到远程仓库（明确指定分支）
+git push origin main
 
 # 提示完成
 Write-Host "提交和推送完成！" -ForegroundColor Green
