@@ -8,8 +8,8 @@ git add .
 $commitMessage = "自动提交: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
 git commit -m $commitMessage
 
-# 推送到远程仓库（明确指定分支）
-git push origin main
+# 推送到远程仓库（将本地master推送到远程main）
+git push origin master:main
 
 # 提示完成
 Write-Host "提交和推送完成！" -ForegroundColor Green

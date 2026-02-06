@@ -13,8 +13,8 @@ git add .
 git commit -m "Auto commit: %datetime%"
 echo Pushing to GitHub...
 
-:: 推送到远程仓库（明确指定分支）
-git push origin main
+:: 推送到远程仓库（将本地master推送到远程main）
+git push origin master:main
 
 echo.
 echo Operation completed!
