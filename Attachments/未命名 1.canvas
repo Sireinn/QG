@@ -1,0 +1,48 @@
+{
+	"nodes": [
+		{
+			"id": "84d8dfe7f5dd6c80",
+			"x": -180,
+			"y": -260,
+			"width": 250,
+			"height": 60,
+			"color": "3",
+			"type": "text",
+			"text": ""
+		},
+		{
+			"id": "fbc51b988848928d",
+			"x": -140,
+			"y": -80,
+			"width": 400,
+			"height": 260,
+			"type": "file",
+			"file": "未命名.canvas"
+		},
+		{
+			"id": "02cc5d325481c8f7",
+			"x": -160,
+			"y": 280,
+			"width": 214,
+			"height": 400,
+			"type": "file",
+			"file": "基本技能学习/111 1.webp"
+		}
+	],
+	"edges": [
+		{
+			"id": "7ec6d00f5a937b38",
+			"fromNode": "84d8dfe7f5dd6c80",
+			"fromSide": "bottom",
+			"toNode": "fbc51b988848928d",
+			"toSide": "top"
+		},
+		{
+			"id": "79e28943adee8e9b",
+			"fromNode": "02cc5d325481c8f7",
+			"fromSide": "top",
+			"toNode": "fbc51b988848928d",
+			"toSide": "left"
+		}
+	]
+}
