@@ -1,0 +1,120 @@
+C51 COMPILER V9.60.7.0   MAIN                                                              03/07/2026 23:48:56 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main.l
+                    -st) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          
+   3          #define SMG_PORT P0
+   4          sbit LSA = P2^2;
+   5          sbit LSB = P2^3;
+   6          sbit LSC = P2^4;
+   7          
+   8          unsigned char code smg_code[] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F};
+   9          unsigned char display_buf[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+  10          
+  11          unsigned int ms_count = 0;
+  12          unsigned long total_seconds = 0;
+  13          volatile bit update_flag = 0; // 标志位：更新显存
+  14          
+  15          void Timer0_Init(void)
+  16          {
+  17   1          TMOD &= 0xF0;
+  18   1          TMOD |= 0x01;
+  19   1          TH0 = 0xFC;
+  20   1          TL0 = 0x6F;
+  21   1          ET0 = 1;
+  22   1          EA = 1;
+  23   1          TR0 = 1;
+  24   1      }
+  25          
+  26          // 显存更新函数 
+  27          void Update_Display_Buffer(unsigned long num)
+  28          {
+  29   1          unsigned char i;
+  30   1          for (i = 0; i < 8; i++)
+  31   1          {
+  32   2              display_buf[7 - i] = num % 10;
+  33   2              num /= 10;
+  34   2          }
+  35   1      }
+  36          
+  37          void Timer0_ISR(void) interrupt 1
+  38          {
+  39   1          static unsigned char frac_acc = 0;
+  40   1          static unsigned char digit = 0;
+  41   1      
+  42   1          // 计时补偿 
+  43   1          frac_acc += 6;
+  44   1          if (frac_acc >= 10)
+  45   1          {
+  46   2              frac_acc -= 10;
+  47   2              TH0 = 0xFC; TL0 = 0x6E;
+  48   2          }
+  49   1          else
+  50   1          {
+  51   2              TH0 = 0xFC; TL0 = 0x6F;
+  52   2          }
+  53   1      
+  54   1          // 仅计数，设置标志位
+C51 COMPILER V9.60.7.0   MAIN                                                              03/07/2026 23:48:56 PAGE 2   
+
+  55   1          ms_count++;
+  56   1          if (ms_count >= 1000)
+  57   1          {
+  58   2              ms_count = 0;
+  59   2              total_seconds++;
+  60   2              update_flag = 1; // 通知主循环去计算，中断立刻退出
+  61   2          }
+  62   1      
+  63   1          //  扫描逻辑 
+  64   1          SMG_PORT = 0x00; 
+  65   1          switch(digit)
+  66   1          {
+  67   2              case 0: LSC=1; LSB=1; LSA=1; break; // LED8
+  68   2              case 1: LSC=1; LSB=1; LSA=0; break; // LED7
+  69   2              case 2: LSC=1; LSB=0; LSA=1; break; // LED6
+  70   2              case 3: LSC=1; LSB=0; LSA=0; break; // LED5
+  71   2              case 4: LSC=0; LSB=1; LSA=1; break; // LED4
+  72   2              case 5: LSC=0; LSB=1; LSA=0; break; // LED3
+  73   2              case 6: LSC=0; LSB=0; LSA=1; break; // LED2
+  74   2              case 7: LSC=0; LSB=0; LSA=0; break; // LED1
+  75   2          }
+  76   1          SMG_PORT = smg_code[display_buf[digit]];
+  77   1          
+  78   1          digit++;
+  79   1          if (digit >= 8) digit = 0;
+  80   1      }
+  81          
+  82          void main(void)
+  83          {
+  84   1          Timer0_Init();
+  85   1          while(1)
+  86   1          {
+  87   2              // 只有当秒数更新时，才在主循环里做耗时的除法运算
+  88   2              if (update_flag == 1)
+  89   2              {
+  90   3                  Update_Display_Buffer(total_seconds);
+  91   3                  update_flag = 0; // 清除标志
+  92   3              }
+  93   2          }
+  94   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    325    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     16       5
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

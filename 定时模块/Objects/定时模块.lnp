@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj" 
+TO ".\Objects\定时模块" 
+PRINT(".\Listings\定时模块.m51") RAMSIZE(256) 
