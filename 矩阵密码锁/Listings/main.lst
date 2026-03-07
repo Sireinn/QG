@@ -1,0 +1,184 @@
+C51 COMPILER V9.60.7.0   MAIN                                                              03/07/2026 11:10:06 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main.l
+                    -st) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          
+   2          #include <REGX52.H>
+   3          #include <intrins.h>
+   4          
+   5          typedef unsigned int u16;
+   6          typedef unsigned char u8;
+   7          
+   8          #define SMG P0
+   9          #define KEY_MATRIX_PORT P1
+  10          
+  11          sbit LSA = P2^2;
+  12          sbit LSB = P2^3;
+  13          sbit LSC = P2^4;
+  14          sbit UNLOCK_LED = P2^0; 
+  15          
+  16          u8 gsmg_code[17] = {
+  17              0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 
+  18              0x7f, 0x6f, 0x77, 0x7c, 0x39, 0x5e, 0x79, 0x71
+  19          };
+  20          
+  21          void delay_10us(u16 ten_us)
+  22          {
+  23   1          while(ten_us--);
+  24   1      }
+  25          
+  26          u8 key_matrix_ranks_scan(void)
+  27          {
+  28   1          u8 key_value = 0;
+  29   1      
+  30   1          // Scan Row 1 (S1, S2, S3, S4)
+  31   1          KEY_MATRIX_PORT = 0x7f; 
+  32   1          if(KEY_MATRIX_PORT != 0x7f)
+  33   1          {
+  34   2              delay_10us(1000);
+  35   2              switch(KEY_MATRIX_PORT)
+  36   2              {
+  37   3                  case 0x77: key_value = 1; break; // S4 -> Displays 0
+  38   3                  case 0x7b: key_value = 2; break; // S3 -> Displays 1
+  39   3                  case 0x7d: key_value = 3; break; // S2 -> Displays 2
+  40   3                  case 0x7e: key_value = 4; break; // S1 -> Displays 3
+  41   3              }
+  42   2              while(KEY_MATRIX_PORT != 0x7f);
+  43   2          }
+  44   1      
+  45   1          // Scan Row 2 (S5, S6, S7, S8)
+  46   1          KEY_MATRIX_PORT = 0xbf; 
+  47   1          if(KEY_MATRIX_PORT != 0xbf)
+  48   1          {
+  49   2              delay_10us(1000);
+  50   2              switch(KEY_MATRIX_PORT)
+  51   2              {
+  52   3                  case 0xb7: key_value = 5; break; // S8 -> Displays 4
+  53   3                  case 0xbb: key_value = 6; break; // S7 -> Displays 5
+  54   3                  case 0xbd: key_value = 7; break; // S6 -> Displays 6
+C51 COMPILER V9.60.7.0   MAIN                                                              03/07/2026 11:10:06 PAGE 2   
+
+  55   3                  case 0xbe: key_value = 8; break; // S5 -> Displays 7
+  56   3              }
+  57   2              while(KEY_MATRIX_PORT != 0xbf);
+  58   2          }
+  59   1      
+  60   1          // Scan Row 3 (S9, S10, S11, S12)
+  61   1          KEY_MATRIX_PORT = 0xdf; 
+  62   1          if(KEY_MATRIX_PORT != 0xdf)
+  63   1          {
+  64   2              delay_10us(1000);
+  65   2              switch(KEY_MATRIX_PORT)
+  66   2              {
+  67   3                  case 0xd7: key_value = 9;  break; // S12 -> Displays 8
+  68   3                  case 0xdb: key_value = 10; break; // S11 -> Displays 9
+  69   3                  case 0xdd: key_value = 11; break; // S10 -> Displays A
+  70   3                  case 0xde: key_value = 12; break; // S9  -> Displays B
+  71   3              }
+  72   2              while(KEY_MATRIX_PORT != 0xdf);
+  73   2          }
+  74   1      
+  75   1          // Scan Row 4 (S13, S14, S15, S16)
+  76   1          KEY_MATRIX_PORT = 0xef; 
+  77   1          if(KEY_MATRIX_PORT != 0xef)
+  78   1          {
+  79   2              delay_10us(1000);
+  80   2              switch(KEY_MATRIX_PORT)
+  81   2              {
+  82   3                  case 0xe7: key_value = 13; break; // S16 -> Displays C
+  83   3                  case 0xeb: key_value = 14; break; // S15 -> Displays D
+  84   3                  case 0xed: key_value = 15; break; // S14 -> Displays E
+  85   3                  case 0xee: key_value = 16; break; // S13 -> Displays F
+  86   3              }
+  87   2              while(KEY_MATRIX_PORT != 0xef);
+  88   2          }
+  89   1      
+  90   1          return key_value;
+  91   1      }
+  92          
+  93          void main()
+  94          {
+  95   1          u8 key = 0;
+  96   1          u8 input_val = 0;
+  97   1          
+  98   1          u8 preset_pwd[4] = {1, 2, 3, 4}; 
+  99   1          u8 input_pwd[4]  = {0, 0, 0, 0}; 
+ 100   1          u8 count = 0;                    
+ 101   1          u8 is_correct = 1;  
+ 102   1          u8 i = 0;   
+ 103   1          UNLOCK_LED = 1;
+ 104   1          SMG = 0x00;     
+ 105   1          LSC = 0; LSB = 0; LSA = 0; 
+ 106   1          while(1)
+ 107   1          {
+ 108   2              key = key_matrix_ranks_scan(); 
+ 109   2              if(key != 0) 
+ 110   2              {
+ 111   3                input_val=key - 1;
+ 112   3                  SMG = gsmg_code[input_val];
+ 113   3                if(input_val == 15) 
+ 114   3                  {
+ 115   4                      count = 0;       
+ 116   4                      UNLOCK_LED = 1;  
+C51 COMPILER V9.60.7.0   MAIN                                                              03/07/2026 11:10:06 PAGE 3   
+
+ 117   4                      SMG = 0x00; 
+ 118   4                  }
+ 119   3                  else 
+ 120   3                  {
+ 121   4                      if(count < 4) 
+ 122   4                      {
+ 123   5                          input_pwd[count] = input_val; 
+ 124   5                          count++;                      
+ 125   5                      }
+ 126   4                      
+ 127   4                      if(count == 4) //
+ 128   4                      {
+ 129   5                          is_correct = 1; //
+ 130   5                          
+ 131   5                          for(i = 0; i < 4; i++) // 
+ 132   5                          {
+ 133   6                              if(input_pwd[i] != preset_pwd[i]) 
+ 134   6                              {
+ 135   7                                  is_correct = 0; // 
+ 136   7                                  break;          // 
+ 137   7                              }
+ 138   6                          }
+ 139   5                          if(is_correct == 1)
+ 140   5                          {
+ 141   6                              UNLOCK_LED = 0; 
+ 142   6                          }
+ 143   5                          else
+ 144   5                          {
+ 145   6                              UNLOCK_LED = 1; 
+ 146   6                              SMG = gsmg_code[14]; 
+ 147   6                          }
+ 148   5                          
+ 149   5                          count = 0; 
+ 150   5                       }
+ 151   4                  }
+ 152   3              
+ 153   3          }
+ 154   2              }
+ 155   1               
+ 156   1          }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    378    ----
+   CONSTANT SIZE    =      8    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     17      11
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

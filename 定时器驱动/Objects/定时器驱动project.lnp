@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj" 
+TO ".\Objects\定时器驱动project" 
+PRINT(".\Listings\定时器驱动project.m51") RAMSIZE(256) 
