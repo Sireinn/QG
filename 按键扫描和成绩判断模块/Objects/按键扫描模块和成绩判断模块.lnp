@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj" 
+TO ".\Objects\按键扫描模块和成绩判断模块" 
+PRINT(".\Listings\按键扫描模块和成绩判断模块.m51") RAMSIZE(256) 
